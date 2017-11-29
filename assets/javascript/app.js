@@ -71,8 +71,10 @@ $.fn.triviaGame = function() {
                 var button = $('<button>');
                 button.text(choicesArr[i]);
                 button.attr('data-id', i);
+                button.attr('class', 'hvr-radial-out');
                 $('#choices_div').append(button);
             }
+            //delay before the clock restarts; set at 1 sec
             window.triviaCounter = setInterval(trivia.timer, 1000);
         } else {
             $('body').append($('<div />', {
@@ -80,14 +82,14 @@ $.fn.triviaGame = function() {
                     trivia.questions.length - (trivia.answers.correct + trivia.answers.incorrect)),
                 class: 'result'
             }));
-            $('#start_button').text('Restart').appendTo('body').show();
+            $('.start_button').text('Restart').appendTo('body').show();
         }
     };
     trivia.timer = function() {
         trivia.count--;
         if (trivia.count <= 0) {
             setTimeout(function() {
-                trivia.nextQ();
+                trivia.nextQuestion();
             });
 
         } else {
@@ -102,7 +104,7 @@ $.fn.triviaGame = function() {
         setTimeout(function() {
             trivia.cleanUp();
             trivia.ask();
-        }, 1000)
+        }, 5000)
     };
     trivia.cleanUp = function() {
         $('div[id]').each(function(item) {
@@ -120,7 +122,7 @@ $.fn.triviaGame = function() {
 };
 var Trivia;
 
-$("#start_button").click(function() {
+$(".start_button").click(function() {
     $(this).hide();
     $('.result').remove();
     $('div').html('');
